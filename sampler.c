@@ -71,6 +71,10 @@ PHP_FUNCTION(sampler_start)
 
 PHP_FUNCTION(sampler_stop)
 {
+    if (timer_delete(SAMPLER_G(timer_id)) != 0) {
+        php_error_docref(NULL, E_WARNING, "Error in timer_delete(): %s", strerror(errno));
+    }
+
     RETURN_ARR(&SAMPLER_G(frames));
 }
 
